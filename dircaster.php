@@ -1,5 +1,8 @@
 <?php
 
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
 
 
 /*
@@ -502,7 +505,7 @@
         //title from descriptions file
         $title = $aItems[ 'title' ];
       }
-      echo ("    <title>".$title."</title>\n"); // title string
+      echo ("    <title>" . fixXML($title) ."</title>\n"); // title string
 
       // remote This is the location of the hosting page that has the enclosure
       if ( $aItems[ 'link' ] == '' ){
@@ -590,7 +593,8 @@
       if ( $aItems[ 'commentCDATA' ] != '' ){
         $description = $aItems[ 'commentCDATA' ];
       }
-      echo ("    <description>$description</description>\n");
+ 
+      echo "    <description>" . fixXML($description) . "</description>\n";
 
       // remote item pubDate
       if ( $aItems[ 'pubDate' ] == '' ){
@@ -757,7 +761,7 @@
         //title from descriptions file
         $title = $aItems[ 'title' ];
       }
-      echo ("    <title>" . $title . "</title>\n"); // title string
+      echo ("    <title>" . fixXML($title) . "</title>\n"); // title string
 
 // nonremote item artist
 if (empty($aItems['artist'])) {
@@ -839,7 +843,8 @@ if (empty($aItems['copyright'])) {
       if ( $aItems[ 'commentCDATA' ] != '' ){
         $description = $aItems[ 'commentCDATA' ];
       }
-      echo ("    <description>$description</description>\n");
+            
+      echo "    <description>" . fixXML($description) . "</description>\n";
 
       // nonremote item pubDate
       if ( $aItems[ 'pubDate' ] == '' ){
@@ -1189,6 +1194,10 @@ echo ("    <itunes:duration>$duration</itunes:duration>\n");
     return $rtn;
 
   }//end function getPubDate
+
+  function fixXML($string) {
+    return htmlspecialchars($string, ENT_XML1, 'UTF-8');
+}
 
   /*
    * end dirCaster.php
