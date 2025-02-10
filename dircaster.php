@@ -224,7 +224,7 @@ error_reporting(E_ALL);
     nonRemoteMedia( $dirArray, $maxFeeds, $delim1, $sftypes,
             $overrideFileType, $aItemsEmpty, $rootMP3URL, $ownerEmailTAG,
             $timeAdjstMinus, $timeAdjstPlus, $keywordTAG, $imageItemTAG,
-            $linkTAG, $overrideFolder,$imageUrlTAG, $imageTitleTAG  );
+            $linkTAG, $overrideFolder,$imageUrlTAG, $imageTitleTAG, $excludedFiles   );
   }// end remote or not
 
   // channel close / rss close
@@ -710,7 +710,7 @@ error_reporting(E_ALL);
   function nonRemoteMedia( $dirArray, $maxFeeds, $delim1, $sftypes,
          $overrideFileType, $aItemsEmpty, $rootMP3URL, $ownerEmailTAG,
          $timeAdjstMinus, $timeAdjstPlus, $keywordTAG, $imageItemTAG,
-         $linkTAG, $overrideFolder, $imageUrlTAG, $imageTitleTAG ) {
+         $linkTAG, $overrideFolder, $imageUrlTAG, $imageTitleTAG, $excludedFiles ) {
 
     $countDirArray = count($dirArray);
 
@@ -720,7 +720,15 @@ error_reporting(E_ALL);
         $arraySlice = $maxFeeds;
     }
     $slicedDirArray = array_slice($dirArray, 0, $arraySlice);
+    
     foreach ($slicedDirArray as $filename => $filedate) {
+
+        // Check if the current file is in the excluded list
+        if (in_array(basename($filename), $excludedFiles)) {
+            continue; // Skip this file
+        }
+    
+    //foreach ($slicedDirArray as $filename => $filedate) {
       $mp3file = new CMP3File;
       $mp3file->getid3 ($filename);
 

@@ -118,6 +118,10 @@
   // Allowed File Types (file extensions) in Feed URL, make sure your type is listed
   $sftypes = "(.mp3 .m4a .asf .wma .wav .avi .mov .m4b .m4v)";
 
+
+  // Define a list of excluded files or patterns
+  $excludedFiles = array('.htaccess', 'error.log', 'error_log');
+
   // location of the "getid3" library - should be the default unless you
   //  changed it in your directory structure.
 
